@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewClientActivity">
+
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/newCLient"
+        android:text="CREATE USER"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <EditText
+        android:paddingLeft="20dp"
+        android:hint="First Name"
+        android:id="@+id/newFirstName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:paddingLeft="20dp"
+
+        android:hint="Last Name"
+        android:id="@+id/newLastName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:paddingLeft="20dp"
+
+        android:hint="Phone Number"
+        android:id="@+id/newPhoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!--<EditText-->
+    <!--android:paddingLeft="20dp"-->
+
+    <!--android:hint="Default Payment"-->
+    <!--android:id="@+id/paymentType"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content" />-->
+
+    <RadioGroup
+        android:id="@+id/radioBut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/cashId"
+            android:text="Cash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/postPaidId"
+            android:text="Post Paid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/prePaid"
+            android:text="Pre Paid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/registerBtn"
+        android:text="Register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

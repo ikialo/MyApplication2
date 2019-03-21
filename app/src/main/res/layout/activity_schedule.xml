@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.metrolinq.ScheduleActivity">
+
+
+
+    <TextView
+        android:textColor="@color/MetroGold"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:id="@+id/text"
+        android:text="PICK UP LOCATIONS"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <!--<LinearLayout-->
+        <!--android:background="@drawable/back_item_view"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:weightSum="100dp"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<TextView-->
+            <!--android:text="Time (Morning)"-->
+            <!--android:layout_weight="50"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<TextView-->
+            <!--android:text="6:20AM"-->
+            <!--android:layout_weight="50"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<TextView-->
+            <!--android:text="7:40AM"-->
+            <!--android:layout_weight="50"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+        <!--android:background="@drawable/back_item_view"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:weightSum="100dp"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<TextView-->
+            <!--android:text="Time (Afternoon)"-->
+            <!--android:layout_weight="50"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<TextView-->
+            <!--android:text="6:20AM"-->
+            <!--android:layout_weight="50"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<TextView-->
+            <!--android:text="7:40AM"-->
+            <!--android:layout_weight="50"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+
+
+    <!--</LinearLayout>-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_recycler_view"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+</LinearLayout>

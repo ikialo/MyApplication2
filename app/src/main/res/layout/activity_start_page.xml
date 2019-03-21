@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".StartPageActivity">
+
+
+    <TextView
+        android:id="@+id/privacy_policy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Privacy Policy" />
+
+    <ImageView
+        android:layout_marginTop="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:src="@drawable/bus_name"
+        android:text="Privacy Policy" />
+
+
+    <Button
+        android:id="@+id/bus"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/back_button"
+        android:drawableTop="@drawable/ic_directions_bus_black_24dp"
+
+        android:paddingTop="15dp" />
+
+    <ImageView
+        android:layout_marginBottom="30dp"
+        android:id="@+id/line_center_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/line1" />
+
+    <ImageView
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:src="@drawable/chauffeur"
+        android:text="Privacy Policy" />
+
+    <Button
+        android:padding="10dp"
+        android:id="@+id/chauffeur"
+
+        android:layout_width="141dp"
+        android:layout_height="131dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/back_button"
+        android:drawableTop="@drawable/ic_directions_car_black_24dp"
+        android:gravity="center" />
+
+
+
+
+
+</LinearLayout>
