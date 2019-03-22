@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.metrolinq.isaac.myapplication">
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -15,7 +16,12 @@
         android:roundIcon="@drawable/mcs"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.metrolinq.ScheduleActivity"></activity>
+        <service
+            android:name=".ServiceLocationPick"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name="com.metrolinq.ScheduleActivity" />
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait">
@@ -30,7 +36,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".StartPageActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

@@ -1,6 +1,7 @@
 package com.metrolinq.isaac.myapplication;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -10,10 +11,13 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -37,7 +41,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int AUTOCOMPLETE_REQUEST_CODE = 450 ;
     private GoogleMap mMap;
     DatabaseReference databaseReference, mDatabase;
-    Boolean Mapclear = false;
+    Boolean Mapclear;
+    String locationName;
+    Button notifyMe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         ImageView line1 = findViewById(R.id.line_center_bus);
+        notifyMe = findViewById(R.id.notifyMe);
+
+
+        notifyMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                choosePickLocation();
+            }
+        });
 
         Animation animation_line = AnimationUtils.loadAnimation(this, R.anim.anim_left2right);
 
@@ -110,14 +125,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    private void updateMapMarker(){
-
+    private void updateMapMarker() {
 
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-               Mapclear = (Boolean) dataSnapshot.child("Map Clear").getValue();
+                Mapclear = (Boolean) dataSnapshot.child("Map Clear").getValue();
+
+
+                    Toast.makeText(MapsActivity.this, "Map is not clear", Toast.LENGTH_SHORT).show();
+
+
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            mMap.clear();
+
+                            //   for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
+
+
+                            if (!Mapclear) {
+                                LatLng car = new LatLng((Double) dataSnapshot.child("latitude").getValue(), (Double) dataSnapshot.child("longitude").getValue());
+
+                                mMap.addMarker(new MarkerOptions()
+                                        .icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.bus_metro))
+                                        .position(car)
+                                        .title(dataSnapshot.getKey()));
+
+                            }
+                            else{
+                                mMap.clear();
+                            }
+                            //  }
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+
             }
 
             @Override
@@ -126,36 +177,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-
-        if (!Mapclear) {
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    mMap.clear();
-
-                    //   for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
-
-
-                    LatLng car = new LatLng((Double) dataSnapshot.child("latitude").getValue(), (Double) dataSnapshot.child("longitude").getValue());
-
-                    mMap.addMarker(new MarkerOptions()
-                            .icon(bitmapDescriptorFromVector(getApplicationContext(), R.drawable.bus_metro))
-                            .position(car)
-                            .title(dataSnapshot.getKey()));
-                    //  }
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-
-        }
-
     }
+
 
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int vectorDrawableResourceId) {
         Drawable background = ContextCompat.getDrawable(context, R.drawable.backtear);
@@ -172,7 +195,55 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
+    private void choosePickLocation(){
+        Toast.makeText(MapsActivity.this, "AmendClick", Toast.LENGTH_SHORT).show();
 
+        final String [] amendOption = {"Waikele Bus Stop", "Gerehu Stage 2 Main Bus Stop", "Rainbow Main Bus Stop"
+                ,"Ensisi LTI Bus Stop","Waigani Main Bus Stop", "Sir Hubert Murray Bus Stop", "Defence Haus Town", "Cuthberthson Haus Town"};
+
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this)  ;
+        builder.setCancelable(true);
+        builder.setTitle("Choose Pick Up Location");
+        builder.setSingleChoiceItems(amendOption, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Toast.makeText(MapsActivity.this, amendOption[which], Toast.LENGTH_SHORT).show();
+
+                locationName = amendOption[which];
+
+
+
+            }
+        });
+
+
+
+        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MapsActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Intent intent = new Intent(MapsActivity.this, ServiceLocationPick.class);
+                intent.putExtra("LOC_NAME", locationName);
+                startService(intent);
+
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 
 
 

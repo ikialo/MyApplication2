@@ -1,14 +1,18 @@
 package com.metrolinq.isaac.myapplication;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +38,7 @@ public class StartPageActivity extends AppCompatActivity {
     DatabaseReference clientDB;
     Button schedule;
     TextView privacyPolicy;
+    String locationName;
 
 
     @Override
@@ -85,6 +90,9 @@ public class StartPageActivity extends AppCompatActivity {
                 Toast.makeText(StartPageActivity.this, "Bus Pressed", Toast.LENGTH_SHORT).show();
 
                 startActivity(new Intent(StartPageActivity.this, MapsActivity.class));
+
+               // choosePickLocation();
+
             }
         });
 //        chauffeur.setOnClickListener(new View.OnClickListener() {
@@ -193,5 +201,49 @@ public class StartPageActivity extends AppCompatActivity {
                 // ...
             }
         }
+    }
+
+    private void choosePickLocation(){
+        Toast.makeText(StartPageActivity.this, "AmendClick", Toast.LENGTH_SHORT).show();
+
+        final String [] amendOption = {"Waikele Bus Stop", "Gerehu Stage 2 Main Bus Stop", "Rainbow Main Bus Stop"
+                ,"Ensisi LTI Bus Stop","Waigani Main Bus Stop", "Sir Hubert Murray Bus Stop", "Defence Haus Town", "Cuthberthson Haus Town"};
+
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(StartPageActivity.this)  ;
+        builder.setCancelable(true);
+        builder.setSingleChoiceItems(amendOption, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Toast.makeText(StartPageActivity.this, amendOption[which], Toast.LENGTH_SHORT).show();
+
+                locationName = amendOption[which];
+
+
+            }
+        });
+
+
+
+        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(StartPageActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
