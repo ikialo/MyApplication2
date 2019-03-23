@@ -15,8 +15,15 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ServiceLocationPick extends Service {
 
@@ -43,7 +50,41 @@ public class ServiceLocationPick extends Service {
     public void onCreate() {
         super.onCreate();
 
-        buildNotification();
+
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("PickUpLocation");
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()){
+
+                    if (postSnapshot.getKey().equals(locationName)){
+                        if (postSnapshot.getValue().equals(true)){
+                            buildNotification();
+                            locationName = "no Name";
+                            break;
+                        }
+                    }
+
+                }
+
+
+//                Boolean notify = (Boolean) dataSnapshot.child("Map Clear").getValue();
+//
+//                if (!notify){
+//                    buildNotification();
+//                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        //buildNotification();
 
 
 
@@ -79,7 +120,7 @@ public class ServiceLocationPick extends Service {
                 //   if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 builder = new NotificationCompat.Builder(this, chanID)//Notification.Builder(this)
                 .setContentTitle(getString(R.string.app_name))
-                .setContentText(locationName)
+                .setContentText("Shuttle is now Approaching "+locationName)
 
 
                 //Make this notification ongoing so it can’t be dismissed by the user//
