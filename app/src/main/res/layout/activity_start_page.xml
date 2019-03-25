@@ -9,13 +9,33 @@
     tools:context=".StartPageActivity">
 
 
-    <TextView
-        android:id="@+id/privacy_policy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
 
-        android:textColor="@color/MetroGold"
-        android:text="Privacy Policy" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:weightSum="100"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="50"
+            android:id="@+id/privacy_policy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textColor="@color/MetroGold"
+            android:text="Privacy Policy" />
+        <TextView
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:layout_weight="50"
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+
+            android:text="LOGOUT" />
+
+    </LinearLayout>
+
 
     <ImageView
         android:layout_marginTop="120dp"

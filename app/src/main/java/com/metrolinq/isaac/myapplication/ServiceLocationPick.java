@@ -125,13 +125,15 @@ public class ServiceLocationPick extends Service {
 
                 //Make this notification ongoing so it can’t be dismissed by the user//
 
-                .setSound(alarmSound)
                 .setOngoing(true)
                 .setContentIntent(broadcastIntent)
                 .setSmallIcon(R.drawable.mcs);
 
 
 
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.O) {
+            builder.setSound(alarmSound);
+        }
         startForeground(1025, builder.build());
 
     }

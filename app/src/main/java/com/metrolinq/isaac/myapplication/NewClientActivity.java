@@ -14,10 +14,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class NewClientActivity extends AppCompatActivity {
-    EditText phoneET, firstNameET,lastNameET, defaulPayType;
-    Button register;
-    RadioButton payType, post, pre;
-    RadioGroup group;
+    private EditText phoneET, firstNameET,lastNameET, defaulPayType;
+    private Button register;
+    private RadioButton payType, post, pre;
+    private RadioGroup group;
 
     DatabaseReference addClient;
 
@@ -46,24 +46,24 @@ public class NewClientActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                group = findViewById(R.id.radioBut);
+//                group = findViewById(R.id.radioBut);
+//
+//                int selectId = group.getCheckedRadioButtonId();
+//
+//                payType = findViewById(selectId);
+//
+//                Toast.makeText(NewClientActivity.this, payType.getText(), Toast.LENGTH_SHORT).show();
+//
+//
+//                ClientInfo clientInfo = new ClientInfo(firstNameET.getText().toString(), lastNameET.getText().toString(),
+//                        firstNameET.getText().toString()+" "+lastNameET.getText().toString(),phone, payType.getText().toString());
+//
+//                String uploadId = addClient.push().getKey();
+//
+//
+//                addClient.child(uploadId).setValue(clientInfo);
 
-                int selectId = group.getCheckedRadioButtonId();
-
-                payType = findViewById(selectId);
-
-                Toast.makeText(NewClientActivity.this, payType.getText(), Toast.LENGTH_SHORT).show();
-
-
-                ClientInfo clientInfo = new ClientInfo(firstNameET.getText().toString(), lastNameET.getText().toString(),
-                        firstNameET.getText().toString()+" "+lastNameET.getText().toString(),phone, payType.getText().toString());
-
-                String uploadId = addClient.push().getKey();
-
-
-                addClient.child(uploadId).setValue(clientInfo);
-
-                Intent intent = new Intent(NewClientActivity.this, MapsActivity2.class);
+                Intent intent = new Intent(NewClientActivity.this, StartPageActivity.class);
                 startActivity(intent);
 
             }

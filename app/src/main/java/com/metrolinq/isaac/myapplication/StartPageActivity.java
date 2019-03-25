@@ -2,6 +2,7 @@ package com.metrolinq.isaac.myapplication;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,8 +40,9 @@ public class StartPageActivity extends AppCompatActivity {
     Button bus;
     DatabaseReference clientDB;
     Button schedule;
-    TextView privacyPolicy;
+    TextView privacyPolicy, logout;
     String locationName;
+    SharedPreferences sp ;
 
 
     @Override
@@ -48,7 +52,28 @@ public class StartPageActivity extends AppCompatActivity {
 
         bus = findViewById(R.id.bus);
 
-         schedule = findViewById(R.id.chauffeur);
+        sp = getSharedPreferences("login",MODE_PRIVATE);
+
+        schedule = findViewById(R.id.chauffeur);
+         logout = findViewById(R.id.logout);
+
+         logout.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 AuthUI.getInstance()
+                         .signOut(StartPageActivity.this)
+                         .addOnCompleteListener(new OnCompleteListener<Void>() {
+                             public void onComplete(@NonNull Task<Void> task) {
+                                 // ...
+                                 sp.edit().putBoolean("logged",false).apply();
+
+                                 startActivity(new Intent(StartPageActivity.this, RegisActivity.class));
+
+
+                             }
+                         });
+             }
+         });
 
          ImageView line1 = findViewById(R.id.line_center_start);
 
@@ -66,7 +91,6 @@ public class StartPageActivity extends AppCompatActivity {
              }
          });
 
-        clientDB = FirebaseDatabase.getInstance().getReference("RegisteredClients");
 
         privacyPolicy = findViewById(R.id.privacy_policy);
 
@@ -120,88 +144,6 @@ public class StartPageActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-
-            if (resultCode == RESULT_OK) {
-                // Successfully signed in
-                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-
-//                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-//                        .setDisplayName("Test").build();
-//
-//                user.updateProfile(profileUpdates);
-
-
-                //Toast.makeText(this, user.updateProfile(new UserProfileChangeRequest().Builder().se), Toast.LENGTH_SHORT).show();
-
-                /*
-                 *
-                 *
-                 *   NEED TO GET THIS EVENTUALY INTO FIREBASE FUNCTIONS TO SAVE CLIENT DATA
-                 *
-                 *
-                 * */
-
-
-
-                clientDB.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-
-                            if (!user.getPhoneNumber().equals(postSnapshot.child("phNum").getValue().toString())){
-
-
-                                Intent intent = new Intent(StartPageActivity.this, NewClientActivity.class);
-                                intent.putExtra("USER", user.getPhoneNumber());
-                                startActivity(intent);
-
-
-
-                            }
-                            else if(user.getPhoneNumber().equals(postSnapshot.child("phNum").getValue().toString())) {
-
-                                Intent intent = new Intent(StartPageActivity.this,MapsActivity2.class);
-                                intent.putExtra("USER", user.getPhoneNumber());
-                                intent.putExtra("USER_INFO", new ClientInfo(
-                                        postSnapshot.child("firstName").getValue().toString(),
-                                        postSnapshot.child("lastName").getValue().toString(),
-                                        postSnapshot.child("firstName").getValue().toString() +" "+
-                                                postSnapshot.child("firstName").getValue().toString(),
-                                        postSnapshot.child("phNum").getValue().toString(),
-                                        postSnapshot.child("paytype").getValue().toString()
-                                ));
-                                startActivity(intent);
-
-                                break;
-                            }
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-
-                // ...
-            } else {
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-                // ...
-            }
-        }
-    }
 
     private void choosePickLocation(){
         Toast.makeText(StartPageActivity.this, "AmendClick", Toast.LENGTH_SHORT).show();
