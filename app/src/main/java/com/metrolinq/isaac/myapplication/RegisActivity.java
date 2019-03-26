@@ -52,6 +52,7 @@ public class RegisActivity extends AppCompatActivity {
 
 
         clientDB = FirebaseDatabase.getInstance().getReference("RegisteredClients");
+        clientDB.child("initialvalue").child("phNum").setValue("10000001");
 
 
 //
@@ -88,11 +89,16 @@ public class RegisActivity extends AppCompatActivity {
 
 
 
+
+
+
                 clientDB.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                         for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+
+
 
                             if (!user.getPhoneNumber().equals(postSnapshot.child("phNum").getValue().toString())){
 
@@ -117,8 +123,9 @@ public class RegisActivity extends AppCompatActivity {
                                         postSnapshot.child("phNum").getValue().toString(),
                                         postSnapshot.child("paytype").getValue().toString()
                                 ));
-                                startActivity(intent);
                                 sp.edit().putBoolean("logged",true).apply();
+
+                                startActivity(intent);
 
                                 break;
                             }

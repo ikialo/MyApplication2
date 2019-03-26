@@ -24,8 +24,10 @@
             android:textColor="@color/MetroGold"
             android:text="Privacy Policy" />
         <TextView
+            android:textColor="@color/MetroGold"
             android:layout_gravity="end"
             android:gravity="end"
+            android:textSize="18dp"
             android:layout_weight="50"
             android:id="@+id/logout"
             android:layout_width="match_parent"

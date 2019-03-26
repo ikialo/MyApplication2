@@ -9,12 +9,12 @@ android {
         targetSdkVersion 28
         versionCode 5
         versionName "1.0.4"
-        multiDexEnabled false
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
