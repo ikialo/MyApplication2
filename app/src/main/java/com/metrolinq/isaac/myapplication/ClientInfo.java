@@ -9,14 +9,14 @@ class ClientInfo implements  Serializable {
     String fullName;
     String phNum;
 
-    String paytype;
+    String gender;
 
-    public ClientInfo(String firstName, String lastName, String fullName, String phNum, String paytype) {
+    public ClientInfo(String firstName, String lastName, String fullName, String phNum, String gender) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.fullName = fullName;
         this.phNum = phNum;
-        this.paytype = paytype;
+        this.gender = gender;
     }
 
     public String getFirstName() {
@@ -51,12 +51,11 @@ class ClientInfo implements  Serializable {
         this.phNum = phNum;
     }
 
-    public String getPaytype() {
-        return paytype;
+    public String getGender() {
+        return gender;
     }
 
-    public void setPaytype(String paytype) {
-        this.paytype = paytype;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
-
 }

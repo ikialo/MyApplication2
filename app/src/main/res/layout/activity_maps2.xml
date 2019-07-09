@@ -2,22 +2,141 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/photo_2019_04_03_14_18_30"
     tools:context=".MapsActivity2" android:layout_height="match_parent" android:layout_width="match_parent"
     android:orientation="vertical">
 
-    <fragment android:id="@+id/autocomplete_fragment"
+
+    <LinearLayout
+        android:id="@+id/placesFragment"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <fragment android:id="@+id/autocomplete_fragment_pick"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            />
+
+        <fragment android:id="@+id/autocomplete_fragment_drop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            />
+
+    </LinearLayout>
+
+
+
+    <Button
+
+        android:text="Get Fare"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        />
+        android:id="@+id/confirm"/>
 
 
-    <fragment
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+
+    <TextView
+        android:textColor="@color/MetroGold"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="K 0.00"
+        android:fontFamily="cursive"
+        android:textSize="35dp"
+        android:id="@+id/price"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="wrap_content" />
+
+
+    <Button
+        android:visibility="gone"
+        android:layout_marginTop="150dp"
+        android:layout_gravity="center"
+        android:id="@+id/confirm_start"
+        android:layout_width="176dp"
+        android:layout_height="160dp"
+        android:background="@drawable/back_button"
+        android:layout_marginBottom="20dp"
+        android:text="Enter Trip Detail" />
+
+
+
+    <Button
+        android:visibility="gone"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:id="@+id/cancel_trip"
+        android:layout_width="176dp"
+        android:layout_height="160dp"
+        android:background="@drawable/back_button"
+        android:layout_marginBottom="20dp"
+        android:text="Cancel Trip" />
+
+
+
+
+    <TextView
+
+        android:textSize="20sp"
+        android:visibility="gone"
+        android:gravity="center"
+        android:text="10pm"
+        android:id="@+id/pick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:gravity="center"
+        android:visibility="gone"
+
+        android:text="10pm"
+        android:id="@+id/drop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:gravity="center"
+        android:visibility="gone"
+
+        android:text="10pm"
+        android:id="@+id/time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:gravity="center"
+        android:visibility="gone"
+
+        android:text="10pm"
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:gravity="center"
+        android:visibility="gone"
+
+        android:text="10pm"
+        android:id="@+id/paytype"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:padding="5dp"
+
+        android:background="@drawable/back_map"
+        android:id="@+id/llmap"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+
+    </LinearLayout>
 
 
 </LinearLayout>
