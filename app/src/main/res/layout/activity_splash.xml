@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/top_block"
+    android:background="@drawable/backmcs_beta"
     tools:context=".SplashActivity">
 
 
@@ -26,6 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/line1" />
+
+
 
 
 

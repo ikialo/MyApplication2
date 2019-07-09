@@ -20,6 +20,11 @@ import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,13 +41,19 @@ import java.util.List;
 public class StartPageActivity extends AppCompatActivity {
 
     private final static int RC_SIGN_IN =400;
-  ImageView chauffeur;
+
     Button bus;
     DatabaseReference clientDB;
-    Button schedule;
+    Button Chauffeur;
     TextView privacyPolicy, logout;
+
+    SharedPreferences sharedPreferences;
     String locationName;
+    FirebaseAuth auth;
     SharedPreferences sp ;
+    private static final int PLACE_PICKER_REQUEST = 20;
+    private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
+            new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
 
 
     @Override
@@ -52,26 +63,42 @@ public class StartPageActivity extends AppCompatActivity {
 
         bus = findViewById(R.id.bus);
 
+        auth = FirebaseAuth.getInstance();
+
+        sharedPreferences = getSharedPreferences("isNewClient", MODE_PRIVATE);
+
+
+
+
+
+
         sp = getSharedPreferences("login",MODE_PRIVATE);
 
-        schedule = findViewById(R.id.chauffeur);
+        Chauffeur = findViewById(R.id.chauffeur);
          logout = findViewById(R.id.logout);
+
+
 
          logout.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 AuthUI.getInstance()
-                         .signOut(StartPageActivity.this)
-                         .addOnCompleteListener(new OnCompleteListener<Void>() {
-                             public void onComplete(@NonNull Task<Void> task) {
-                                 // ...
-                                 sp.edit().putBoolean("logged",false).apply();
 
-                                 startActivity(new Intent(StartPageActivity.this, RegisActivity.class));
+                 auth.signOut();
+                 sp.edit().putBoolean("logged",false).apply();
+                 FirebaseAuth.getInstance().signOut();
 
 
-                             }
-                         });
+                 startActivity(new Intent(StartPageActivity.this, RegisActivity.class));
+
+//                 AuthUI.getInstance()
+//                         .signOut(StartPageActivity.this)
+//                         .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                             public void onComplete(@NonNull Task<Void> task) {
+//                                 // ...
+//
+//                             }
+//                         });
+
              }
          });
 
@@ -82,12 +109,13 @@ public class StartPageActivity extends AppCompatActivity {
 
         line1.setAnimation(animation_line);
 
-         schedule.setOnClickListener(new View.OnClickListener() {
+         Chauffeur.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
 
 
-                 Toast.makeText(StartPageActivity.this, "Chauffeur Pressed: No Schedule Uploaded", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(StartPageActivity.this, "Chauffeur Pressed: No Schedule Uploaded", Toast.LENGTH_SHORT).show();
+                 startActivity(new Intent(StartPageActivity.this, MapsActivity2.class));
              }
          });
 
@@ -115,77 +143,29 @@ public class StartPageActivity extends AppCompatActivity {
 
                 startActivity(new Intent(StartPageActivity.this, MapsActivity.class));
 
-               // choosePickLocation();
+
 
             }
         });
-//        chauffeur.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//
-//                List<AuthUI.IdpConfig> providers = Arrays.asList(
-//                        new AuthUI.IdpConfig.PhoneBuilder().build());
-//
-//// Create and launch sign-in intent
-//                startActivityForResult(
-//                        AuthUI.getInstance()
-//                                .createSignInIntentBuilder()
-//                                .setAvailableProviders(providers)
-//                                .build(),
-//                        RC_SIGN_IN);
-//
-//            }
-//        });
-
 
 
 
     }
 
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
-    private void choosePickLocation(){
-        Toast.makeText(StartPageActivity.this, "AmendClick", Toast.LENGTH_SHORT).show();
-
-        final String [] amendOption = {"Waikele Bus Stop", "Gerehu Stage 2 Main Bus Stop", "Rainbow Main Bus Stop"
-                ,"Ensisi LTI Bus Stop","Waigani Main Bus Stop", "Sir Hubert Murray Bus Stop", "Defence Haus Town", "Cuthberthson Haus Town"};
-
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(StartPageActivity.this)  ;
-        builder.setCancelable(true);
-        builder.setSingleChoiceItems(amendOption, -1, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                Toast.makeText(StartPageActivity.this, amendOption[which], Toast.LENGTH_SHORT).show();
-
-                locationName = amendOption[which];
-
-
-            }
-        });
+        sharedPreferences.edit().putBoolean("isNC", false);
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
 
 
 
-        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(StartPageActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
-
-
-            }
-        });
-
-        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
+
+
 }

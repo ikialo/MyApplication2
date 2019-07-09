@@ -1,6 +1,8 @@
 package com.metrolinq.isaac.myapplication;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,12 +23,22 @@ public class NewClientActivity extends AppCompatActivity {
     private RadioGroup group;
 
     DatabaseReference addClient;
+    SharedPreferences sharedPreferences ;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_client);
 
+
+        sharedPreferences = getSharedPreferences("isNewClient", MODE_PRIVATE);
+
+        if (!sharedPreferences.getBoolean("isNC", true)){
+            startActivity(new Intent(NewClientActivity.this, StartPageActivity.class));
+            finish();
+        }
 
         final String phone = getIntent().getExtras().getString("USER");
 

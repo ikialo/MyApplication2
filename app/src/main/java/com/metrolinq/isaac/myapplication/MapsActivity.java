@@ -10,6 +10,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -28,7 +29,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import com.google.common.collect.Maps;
+//import com.google.common.collect.Maps;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,6 +61,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         notifyMe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 choosePickLocation();
             }
         });
@@ -234,9 +237,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Intent intent = new Intent(MapsActivity.this, ServiceLocationPick.class);
-                intent.putExtra("LOC_NAME", locationName);
-                startService(intent);
+//
+
+
+                    Intent intent = new Intent(MapsActivity.this, ServiceLocationPick.class);
+                    intent.putExtra("LOC_NAME", locationName);
+                    startService(intent);
+
+
+
 
 
             }

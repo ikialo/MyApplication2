@@ -2,4 +2,7 @@
     <string name="app_name">MCS</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_maps2">Map</string>
+    <string name="apiPlacesKey">AIzaSyBBVE4L8IPO6--0fRhfgy471hqOD3HCCTg</string>
+    <string name="apiPlacesKeyTest">AIzaSyDcIeb-kA8FxJ_uQ564kcspgrk4cCxFUxs</string>
+
 </resources>
